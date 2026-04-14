@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 
@@ -6,6 +7,8 @@ export default function Home() {
     <>
       <Navbar />
       <HeroSection />
+      <main className="flex-1 bg-white"></main>
+      <Footer />
     </>
   );
 }

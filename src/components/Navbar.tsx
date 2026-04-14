@@ -3,14 +3,8 @@
 import { Heart, Menu, Search, User, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { navLinks } from "@/constants/menu";
 import { cn } from "@/lib/utils";
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Inventory", href: "#" },
-  { label: "Financing", href: "#" },
-  { label: "Contact", href: "#" },
-];
 
 export default function Navbar() {
   const [cartCount] = useState(0);
