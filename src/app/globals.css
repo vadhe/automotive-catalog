@@ -46,6 +46,17 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-hover: var(--brand-accent-hover);
+  --color-hero-overlay: var(--hero-overlay);
+  --color-badge-eco: var(--badge-eco);
+  --color-badge-premium: var(--badge-premium);
+  --color-badge-new: var(--badge-new);
+  --color-text-heading: var(--text-heading);
+  --color-text-muted: var(--text-muted);
 }
 
 :root {
@@ -81,6 +92,23 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── Brand palette ── */
+  --brand: #1a2b4a;
+  --brand-hover: #243860;
+  --brand-deep: #1e3a5f;
+  --brand-accent: #2563eb;
+  --brand-accent-hover: #1d4ed8;
+  --hero-overlay: #2a3f6f;
+
+  /* ── Badges ── */
+  --badge-eco: #059669;
+  --badge-premium: #7c3aed;
+  --badge-new: #16a34a;
+
+  /* ── Semantic text ── */
+  --text-heading: #0f172a;
+  --text-muted: #64748b;
 }
 
 .dark {
