@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "🔍 Running Biome check on staged files..."
+pnpm biome check --staged --no-errors-on-unmatched --write
+
+if [ $? -ne 0 ]; then
+  echo "❌ Biome check failed. Please fix the errors before committing."
+  exit 1
+fi
+
+echo "✅ Biome check passed!"
