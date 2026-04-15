@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import catalogReducer from "@/store/catalogSlice";
+import wishlistReducer from "@/store/wishlistSlice";
 
 const catalogPersistConfig = {
   key: "catalog",
@@ -18,8 +19,14 @@ const catalogPersistConfig = {
   blacklist: ["visibleCount"],
 };
 
+const wishlistPersistConfig = {
+  key: "wishlist",
+  storage,
+};
+
 const rootReducer = combineReducers({
   catalog: persistReducer(catalogPersistConfig, catalogReducer),
+  wishlist: persistReducer(wishlistPersistConfig, wishlistReducer),
 });
 
 export function makeStore() {

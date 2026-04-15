@@ -2,13 +2,23 @@
 
 import { Heart, Menu, Search, User, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navLinks } from "@/constants/menu";
+import { useAppSelector } from "@/hooks/redux";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const [cartCount] = useState(0);
-  const [wishlistCount] = useState(3);
+  const rawWishlistCount = useAppSelector(
+    (state) => state.wishlist.items.length,
+  );
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  // Sync count on mount to avoid hydration mismatch
+  useEffect(() => {
+    setWishlistCount(rawWishlistCount);
+  }, [rawWishlistCount]);
+
   const [activeLink, setActiveLink] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -73,13 +83,13 @@ export default function Navbar() {
 
             <button
               type="button"
-              aria-label="Cart"
+              aria-label="Wishlist"
               className="relative text-gray-500 hover:text-brand transition-colors duration-150"
             >
               <Heart size={18} strokeWidth={1.8} />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 min-w-4 h-4 flex items-center justify-center rounded-full bg-brand-accent text-white text-[10px] font-semibold leading-none px-1">
-                  {cartCount}
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 min-w-4 h-4 flex items-center justify-center rounded-full bg-brand text-white text-[10px] font-semibold leading-none px-1">
+                  {wishlistCount}
                 </span>
               )}
             </button>

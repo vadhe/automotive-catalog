@@ -2,6 +2,8 @@
 
 import { Heart, Minus, Plus } from "lucide-react";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { toggleWishlist } from "@/store/wishlistSlice";
 import type { Product } from "@/types/product";
 
 interface ProductInfoProps {
@@ -9,8 +11,11 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  const dispatch = useAppDispatch();
+  const wishlistItems = useAppSelector((state) => state.wishlist.items);
+  const isWishlisted = wishlistItems.includes(product.id);
+
   const [quantity, setQuantity] = useState(1);
-  const [wishlist, setWishlist] = useState(false);
 
   const comparePrice = product.price * 1.15;
 
@@ -72,15 +77,17 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         <button
           type="button"
           className="flex-1 h-12 flex items-center justify-center gap-2 border border-gray-200 rounded-lg text-sm font-semibold hover:border-brand-accent hover:text-brand-accent transition-colors bg-white"
-          onClick={() => setWishlist(!wishlist)}
+          onClick={() => dispatch(toggleWishlist(product.id))}
         >
           <Heart
             size={16}
             className={
-              wishlist ? "fill-brand-accent text-brand-accent" : "text-gray-500"
+              isWishlisted
+                ? "fill-brand-accent text-brand-accent"
+                : "text-gray-500"
             }
           />
-          Wishlist
+          {isWishlisted ? "Added to Wishlist" : "Wishlist"}
         </button>
       </div>
 
