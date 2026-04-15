@@ -6,7 +6,7 @@ export type PriceRange = {
 
 export const PRICE_RANGES: PriceRange[] = [
   { label: "All", min: 0, max: Infinity },
-  { label: "Under 1M", min: 0, max: 1_000_000 },
-  { label: "1M - 5M", min: 1_000_000, max: 5_000_000 },
-  { label: "Above 5M", min: 5_000_000, max: Infinity },
+  { label: "Under $50", min: 0, max: 50 },
+  { label: "$50 - $100", min: 50, max: 100 },
+  { label: "Over $100", min: 100, max: Infinity },
 ];
