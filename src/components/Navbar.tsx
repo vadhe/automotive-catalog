@@ -40,7 +40,7 @@ export default function Navbar() {
             href="/"
             className="text-brand font-bold text-xl tracking-tight shrink-0"
           >
-            AutoElite
+            FakeStore
           </Link>
           <nav className="hidden md:flex items-center gap-7 ml-10">
             {navLinks.map((link) => (
