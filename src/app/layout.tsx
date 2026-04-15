@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import QueryProvider from "@/providers/QueryProvider";
+import StoreProvider from "@/providers/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -16,9 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AutoElite – Vehicle Marketplace",
+  title: "FakeStore – Online Store",
   description:
-    "Find your perfect vehicle from our premium selection of certified automobiles.",
+    "Find your perfect products from our premium selection of clothing and electronics.",
 };
 
 export default function RootLayout({
@@ -38,7 +40,11 @@ export default function RootLayout({
         inter.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <StoreProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </StoreProvider>
+      </body>
     </html>
   );
 }

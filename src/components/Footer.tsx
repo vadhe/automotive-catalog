@@ -63,10 +63,10 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex flex-col items-center sm:items-start gap-0.5 shrink-0">
             <span className="text-white font-semibold text-lg sm:text-xl tracking-tight">
-              AutoElite
+              FakeStore
             </span>
             <span className="text-[#94A3B8] font-normal text-xs sm:text-sm">
-              &copy; {currentYear} AutoElite. All rights reserved.
+              &copy; {currentYear} FakeStore. All rights reserved.
             </span>
           </div>
 
