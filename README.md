@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FakeStore Catalog
 
-## Getting Started
+Hey there! This is a simple but solid e-commerce catalog project built with Next.js using the FakeStore API. It includes responsive product listings, dynamic filtering, a custom product detail page, and a locally persistent Wishlist feature.
 
-First, run the development server:
+## Tech Stack
+Here's what I used to build this out:
+- **Next.js 15 (App Router)** - For the main framework, routing, and SSR architecture.
+- **React 19** - Building the UI components.
+- **TypeScript** - For writing safe, strongly-typed code.
+- **Tailwind CSS** - For responsive, utility-first styling.
+- **Redux Toolkit & Redux Persist** - For managing the global wishlist state and saving it in local storage.
+- **TanStack React Query** - For fetching, caching, and syncing the FakeStore API data.
+- **Biome** - For super fast linting and formatting.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Running the App Locally
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To get this running on your local machine, follow these easy steps:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Prerequisites:** Make sure you have Node.js and `pnpm` installed.
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
+3. **Start the dev server:**
+   ```bash
+   pnpm run dev
+   ```
+4. **Open it up:** Check it out at [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Dealing with React Hydration Mismatches
 
-## Learn More
+When you use local storage (via `redux-persist`) in a Next.js App Router app, you almost always run into a nasty React hydration mismatch error. This happens because the Server-Side Render (SSR) pass doesn't have access to the browser's `localStorage`. Because of that, the server spits out the default state (like `0` items in the wishlist or cart). Then, a hot second later, the client-side JavaScript boots up, reads the `localStorage` (say, `3` items), and tries to render it. React freaks out because the initial server HTML doesn't match the client HTML.
 
-To learn more about Next.js, take a look at the following resources:
+*(Note: We built a persistent Wishlist feature for this project rather than a full checkout Cart to keep the scope clean, but the hydration problem and solution are the exact same!)*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Here is how I handled it:
+1. **PersistGate**: I used `PersistGate` inside the global `StoreProvider` (which stays a Client Component) to make sure the Redux state holds off on full hydration until the local data is successfully pulled from the browser.
+2. **The useEffect trick**: Even with `PersistGate`, components that are rendered early by the server (like the `Navbar` counter badge) can still mismatch if they try to pull the `localstorage` value directly on their first render pass. So, in `Navbar.tsx`, I set the badge count to a hard `0` by default using `useState`. Then, I use a simple `useEffect` to grab the actual Redux Persist value and update the count *after* the component has safely mounted on the client. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This strategy guarantees the server and client initial renders match up perfectly under the hood, and the UI just gracefully snaps into place a split-second later without any noisy console errors!
